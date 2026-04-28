@@ -51,8 +51,8 @@ body {
   z-index: 100;
   border-bottom: 2px solid var(--red);
 }
-.logo-lockup { display: flex; align-items: center; gap: 14px; }
-.logo-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.12); }
+.logo-lockup { display: flex; align-items: center; gap: 8px; }
+.logo-divider { display: none; }
 .logo-event-block { display: flex; flex-direction: column; gap: 2px; }
 .logo-event-title {
   font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 700;
@@ -541,29 +541,106 @@ input[type="text"]::placeholder { color: var(--smoke); }
 .email-gate-success p { color: rgba(255,255,255,0.45); font-size: 12px; margin: 0; }
 
 /* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  /* iPad */
+  .header { padding: 0 20px; }
+  .hero { padding: 28px 24px; }
+  .info-panel { padding: 20px 24px; }
+  .controls-inner { padding: 0 20px; }
+  .content { padding: 24px 20px 80px; }
+}
+
 @media (max-width: 700px) {
-  .header { padding: 0 16px; }
-  .hero { padding: 36px 20px 32px; }
-  .info-panel { padding: 20px 16px; }
-  .controls-inner { padding: 0 16px; }
-  .stats-bar { padding: 7px 16px; gap: 10px; flex-wrap: nowrap; overflow-x: auto; }
-  .stats-bar::-webkit-scrollbar { display: none; }
-  .stat-sep { display: none; }
-  .content { padding: 20px 14px 80px; }
-  .detail-grid { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
-  .logo-event { display: none; }
+  /* Mobile */
+  .header { padding: 0 14px; height: 52px; }
+  .logo-lockup { gap: 6px; }
+  .logo-lockup svg { width: 120px !important; }
+  .logo-event-title { font-size: 11px; }
+  .logo-event-sub { font-size: 8.5px; }
   .join-btn { display: none; }
+  .live-pill { font-size: 10px; padding: 3px 8px; gap: 4px; }
+
+  .hero { padding: 20px 16px 24px; }
+  .hero-title { font-size: clamp(22px, 7vw, 32px); }
+  .hero-meta { gap: 6px; margin-top: 10px; }
+  .hero-tag { font-size: 10px; padding: 3px 8px; }
+  .hero-cols { flex-direction: column; gap: 16px; }
+  .hero-col-cta { min-width: unset; width: 100%; }
+  .hero-body { margin-top: 16px; padding-top: 16px; }
+  .connect-box { padding: 12px 14px; }
+
+  .info-panel { padding: 16px 14px; }
+  .info-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .info-text-title { font-size: 11px; }
+  .info-text-sub { font-size: 10px; }
+
+  .sticky-controls { top: 52px; }
+  .controls-inner { padding: 0; }
+  .search-row {
+    flex-direction: column; align-items: stretch;
+    gap: 6px; padding: 8px 12px 4px;
+  }
+  .search-wrap { min-width: 0; width: 100%; }
+  input[type="text"] { font-size: 16px !important; }
+  .submit-btn { display: none; }
+  .filter-chips {
+    gap: 4px; overflow-x: auto; flex-wrap: nowrap;
+    padding: 0 12px 8px; -webkit-overflow-scrolling: touch;
+  }
+  .filter-chips::-webkit-scrollbar { display: none; }
+  .filter-chip { font-size: 10.5px; padding: 4px 10px; flex-shrink: 0; }
+  .day-tabs { padding: 8px 0 0; }
+  .day-tab { font-size: 11px; padding: 6px 10px 9px; }
+
+  .stats-bar {
+    padding: 6px 12px; gap: 8px;
+    flex-wrap: nowrap; overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .stats-bar::-webkit-scrollbar { display: none; }
+  .stats-bar .submit-btn { display: inline-flex !important; font-size: 10px !important; padding: 4px 10px !important; flex-shrink: 0; }
+  .stat { font-size: 11px; white-space: nowrap; }
+  .stat-sep { display: none; }
+
+  .content { padding: 14px 10px 80px; }
+  .day-label { font-size: 18px; }
+  .event-main { padding: 10px 12px; gap: 8px; }
+  .event-time-col { min-width: 56px; font-size: 10px; }
+  .event-name { font-size: 13px; }
+  .event-host { font-size: 11px; }
+  .tag { font-size: 9.5px; padding: 2px 6px; }
+  .event-right { min-width: 50px; }
+  .event-venue-short { font-size: 10px; }
+  .event-detail { padding: 0 12px 12px; }
+  .detail-grid { grid-template-columns: 1fr; gap: 8px; }
+  .detail-item p { font-size: 12px; }
+  .event-notes { font-size: 12px; }
+  .rsvp-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+
+  .modal { border-radius: 8px; }
+  .modal-header { padding: 14px 16px 12px; }
+  .modal-body { padding: 14px 16px 18px; }
+  .form-row { grid-template-columns: 1fr; gap: 10px; }
+
+  .email-gate-box { padding: 24px 18px; }
+  .email-gate-box h2 { font-size: 20px; }
+
   .mobile-fab {
     display: flex !important; position: fixed; bottom: 20px; right: 16px; z-index: 500;
     width: 52px; height: 52px; background: var(--red); color: white;
     border-radius: 2px; align-items: center; justify-content: center;
-    font-size: 24px; box-shadow: 0 4px 20px rgba(13,13,20,0.4);
-    cursor: pointer; border: 1px solid var(--border);
+    font-size: 24px; line-height: 1;
+    box-shadow: 0 4px 20px rgba(255,10,10,0.4);
+    cursor: pointer; border: none;
+    -webkit-tap-highlight-color: transparent;
   }
-  .search-row { flex-direction: column; align-items: stretch; padding: 8px 0 4px; }
-  .submit-btn { display: none; }
-  .stats-bar .submit-btn { display: inline-flex !important; font-size: 10px !important; padding: 4px 10px !important; flex-shrink: 0; }
+}
+
+@media (max-width: 380px) {
+  .logo-lockup svg { width: 100px !important; }
+  .logo-event-title { font-size: 10px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 20px; }
 }
 </style>
 </head>
@@ -1038,5 +1115,31 @@ function showSuccess(type){const icon=document.getElementById('successIcon'),tit
   </div>
 </div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function () {
+  const SUPABASE_URL      = 'https://vdjfrloafzgedcancpbu.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_ItKE3fIryE40gRUJu36JGw_4qDw9lbm';
+  const pill    = document.getElementById('liveViewersPill');
+  const countEl = document.getElementById('liveViewerCount');
+  function setCount(n) { if (!pill || !countEl) return; countEl.textContent = n; pill.style.display = 'inline-flex'; }
+  setCount(1);
+  try {
+    const client  = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const myId    = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+    const channel = client.channel('yorkseed-maitw-live', { config: { presence: { key: myId } } });
+    channel
+      .on('presence', { event: 'sync' }, () => { const state = channel.presenceState(); setCount(Object.keys(state).length); })
+      .subscribe(async (status) => { if (status === 'SUBSCRIBED') { await channel.track({ joined_at: Date.now() }); } });
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') { channel.untrack(); }
+      else if (document.visibilityState === 'visible') { channel.track({ joined_at: Date.now() }); }
+    });
+    window.addEventListener('beforeunload', () => { channel.untrack(); });
+    window.addEventListener('pagehide', () => { channel.untrack(); });
+  } catch (err) { console.warn('[LiveViewers] Could not connect:', err); setCount(1); }
+})();
+</script>
 </body>
 </html>
