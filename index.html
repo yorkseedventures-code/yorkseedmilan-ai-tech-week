@@ -934,13 +934,42 @@ function buildDayTabs(){
     tab.className='day-tab'+(d.date==='all'?' active':'');
     tab.dataset.date=d.date;
     tab.innerHTML=`${d.label} <span class="count">${count}</span>`;
-    tab.addEventListener('click',()=>{activeDay=d.date;document.querySelectorAll('.day-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');render();});
+    tab.addEventListener('click',()=>{
+      activeDay=d.date;
+      document.querySelectorAll('.day-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      render();
+      // Scroll to top of content area, below sticky header + controls
+      requestAnimationFrame(()=>{
+        const header = document.querySelector('.header');
+        const sticky = document.querySelector('.sticky-controls');
+        const content = document.getElementById('content');
+        if(content && header && sticky){
+          const offset = header.offsetHeight + sticky.offsetHeight;
+          const top = content.getBoundingClientRect().top + window.scrollY - offset - 8;
+          window.scrollTo({top: Math.max(top, 0), behavior: 'smooth'});
+        }
+      });
+    });
     tabs.appendChild(tab);
   });
 }
 
 document.querySelectorAll('.filter-chip[data-type]').forEach(chip=>{
-  chip.addEventListener('click',()=>{document.querySelectorAll('.filter-chip[data-type]').forEach(c=>c.classList.remove('active'));chip.classList.add('active');activeType=chip.dataset.type;render();});
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-chip[data-type]').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');activeType=chip.dataset.type;render();
+    requestAnimationFrame(()=>{
+      const header=document.querySelector('.header');
+      const sticky=document.querySelector('.sticky-controls');
+      const content=document.getElementById('content');
+      if(content&&header&&sticky){
+        const offset=header.offsetHeight+sticky.offsetHeight;
+        const top=content.getBoundingClientRect().top+window.scrollY-offset-8;
+        window.scrollTo({top:Math.max(top,0),behavior:'smooth'});
+      }
+    });
+  });
 });
 document.querySelectorAll('.filter-chip[data-free]').forEach(chip=>{
   chip.addEventListener('click',()=>{const val=chip.dataset.freeVal;if(freeFilter===val){freeFilter=null;chip.classList.remove('active');}else{document.querySelectorAll('.filter-chip[data-free]').forEach(c=>c.classList.remove('active'));freeFilter=val;chip.classList.add('active');}render();});
