@@ -1116,29 +1116,74 @@ function showSuccess(type){const icon=document.getElementById('successIcon'),tit
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
 <script>
 (function () {
   const SUPABASE_URL      = 'https://vdjfrloafzgedcancpbu.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_ItKE3fIryE40gRUJu36JGw_4qDw9lbm';
   const pill    = document.getElementById('liveViewersPill');
   const countEl = document.getElementById('liveViewerCount');
-  function setCount(n) { if (!pill || !countEl) return; countEl.textContent = n; pill.style.display = 'inline-flex'; }
+
+  function setCount(n) {
+    if (!pill || !countEl) return;
+    countEl.textContent = n;
+    pill.style.display = 'inline-flex';
+  }
   setCount(1);
+
   try {
-    const client  = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    const myId    = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
-    const channel = client.channel('yorkseed-maitw-live', { config: { presence: { key: myId } } });
-    channel
-      .on('presence', { event: 'sync' }, () => { const state = channel.presenceState(); setCount(Object.keys(state).length); })
-      .subscribe(async (status) => { if (status === 'SUBSCRIBED') { await channel.track({ joined_at: Date.now() }); } });
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') { channel.untrack(); }
-      else if (document.visibilityState === 'visible') { channel.track({ joined_at: Date.now() }); }
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      realtime: { params: { eventsPerSecond: 10 } }
     });
-    window.addEventListener('beforeunload', () => { channel.untrack(); });
-    window.addEventListener('pagehide', () => { channel.untrack(); });
-  } catch (err) { console.warn('[LiveViewers] Could not connect:', err); setCount(1); }
+
+    const myId = crypto.randomUUID ? crypto.randomUUID() : (Date.now().toString(36) + Math.random().toString(36).slice(2));
+
+    const channel = client.channel('yorkseed-maitw-live', {
+      config: {
+        presence: { key: myId },
+        broadcast: { self: true }
+      }
+    });
+
+    channel
+      .on('presence', { event: 'sync' }, () => {
+        const state = channel.presenceState();
+        const count = Object.keys(state).length;
+        console.log('[LiveViewers] sync — count:', count, state);
+        setCount(Math.max(count, 1));
+      })
+      .on('presence', { event: 'join' }, ({ key, newPresences }) => {
+        console.log('[LiveViewers] join:', key, newPresences);
+      })
+      .on('presence', { event: 'leave' }, ({ key, leftPresences }) => {
+        console.log('[LiveViewers] leave:', key, leftPresences);
+      })
+      .subscribe(async (status, err) => {
+        console.log('[LiveViewers] status:', status, err || '');
+        if (status === 'SUBSCRIBED') {
+          const res = await channel.track({ joined_at: Date.now(), id: myId });
+          console.log('[LiveViewers] track result:', res);
+        }
+        if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+          console.warn('[LiveViewers] channel error — falling back to 1');
+          setCount(1);
+        }
+      });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        channel.untrack();
+      } else {
+        channel.track({ joined_at: Date.now(), id: myId });
+      }
+    });
+    window.addEventListener('beforeunload', () => channel.untrack());
+    window.addEventListener('pagehide', () => channel.untrack());
+
+  } catch (err) {
+    console.warn('[LiveViewers] init error:', err);
+    setCount(1);
+  }
 })();
 </script>
 </body>
