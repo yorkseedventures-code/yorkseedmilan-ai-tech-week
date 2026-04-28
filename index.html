@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: wss:; img-src 'self' data: https:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yorkseed — Milan AI Tech Week 2026 · Master Side Event List</title>
 <meta name="description" content="90+ Milan AI Tech Week events. Tech, founder, and investor events across Europe's AI capital. Updated daily by Yorkseed.">
@@ -1151,19 +1152,21 @@ function showSuccess(type){const icon=document.getElementById('successIcon'),tit
     channel
       .on('presence', { event: 'sync' }, () => {
         const state = channel.presenceState();
-        othersCount = Object.keys(state).length;
-        console.log('[LiveViewers] sync — others:', othersCount, state);
-        setCount(Math.max(othersCount, 1));
+        // presenceState() excludes self, so add 1 for current user
+        const others = Object.keys(state).length;
+        const total = others + 1;
+        console.log('[LiveViewers] sync — others:', others, '— total:', total);
+        setCount(total);
       })
       .on('presence', { event: 'join' }, ({ key, newPresences }) => {
         console.log('[LiveViewers] join:', key);
         const state = channel.presenceState();
-        setCount(Math.max(Object.keys(state).length, 1));
+        setCount(Object.keys(state).length + 1);
       })
       .on('presence', { event: 'leave' }, ({ key, leftPresences }) => {
         console.log('[LiveViewers] leave:', key);
         const state = channel.presenceState();
-        setCount(Math.max(Object.keys(state).length, 1));
+        setCount(Math.max(Object.keys(state).length + 1, 1));
       })
       .subscribe(async (status, err) => {
         console.log('[LiveViewers] status:', status, err || '');
@@ -1172,10 +1175,9 @@ function showSuccess(type){const icon=document.getElementById('successIcon'),tit
           console.log('[LiveViewers] track result:', res);
           setTimeout(() => {
             const state = channel.presenceState();
-            const count = Object.keys(state).length;
-            console.log('[LiveViewers] post-track state:', count, JSON.stringify(state));
-            // If state is empty, self isn't included — show 1 minimum
-            setCount(Math.max(count, 1));
+            const total = Object.keys(state).length + 1;
+            console.log('[LiveViewers] post-track total:', total);
+            setCount(total);
           }, 800);
         }
         if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
