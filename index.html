@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: wss:; img-src 'self' data: https:;">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Yorkseed — Milan AI Tech Week 2026 · Master Side Event List</title>
 <meta name="description" content="90+ Milan AI Tech Week events. Tech, founder, and investor events across Europe's AI capital. Updated daily by Yorkseed.">
@@ -31,7 +30,7 @@
   --shadow-lg: 0 8px 40px rgba(13,13,20,0.14);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-padding-top: 160px; }
+html { scroll-padding-top: 180px; }
 
 body {
   font-family: 'Sora', sans-serif;
@@ -194,7 +193,7 @@ body {
 /* ── STICKY CONTROLS ── */
 .sticky-controls {
   position: sticky;
-  top: 56px;
+  top: 52px;
   z-index: 89;
   background: white;
   border-bottom: 1px solid var(--cream-dark);
@@ -1119,39 +1118,65 @@ function showSuccess(type){const icon=document.getElementById('successIcon'),tit
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (function () {
-  const SUPABASE_URL      = 'https://vdjfrloafzgedcancpbu.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_ItKE3fIryE40gRUJu36JGw_4qDw9lbm';
   const pill    = document.getElementById('liveViewersPill');
   const countEl = document.getElementById('liveViewerCount');
   function setCount(n) { if (!pill || !countEl) return; countEl.textContent = n; pill.style.display = 'inline-flex'; }
   setCount(1);
-  try {
-    const client  = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    const myId    = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
-    const channel = client.channel('yorkseedmilan-ai-tech-week', { config: { presence: { key: myId } } });
-    channel
-      .on('presence', { event: 'sync' }, () => {
-        const state = channel.presenceState();
-        const count = Object.keys(state).length;
-        console.log('[LiveViewers] sync count:', count, JSON.stringify(state));
-        setCount(Math.max(count, 1));
-      })
-      .subscribe(async (status) => {
-        console.log('[LiveViewers] status:', status);
-        if (status === 'SUBSCRIBED') {
-          await channel.track({ joined_at: Date.now() });
-        }
+
+  // Check if WebSocket is available and secure
+  function wsAvailable() {
+    try {
+      if (typeof WebSocket === 'undefined') return false;
+      // Safari blocks wss:// in some contexts — test with a dummy
+      return window.isSecureContext !== false;
+    } catch(e) { return false; }
+  }
+
+  if (!wsAvailable()) {
+    console.log('[LiveViewers] WebSocket not available, using static count');
+    setCount(1);
+    return;
+  }
+
+  const SUPABASE_URL      = 'https://vdjfrloafzgedcancpbu.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_ItKE3fIryE40gRUJu36JGw_4qDw9lbm';
+
+  // Dynamically load Supabase only if WebSocket is available
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+  s.onload = function() {
+    try {
+      const client  = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      const myId    = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+      const channel = client.channel('yorkseedmilan-ai-tech-week', { config: { presence: { key: myId } } });
+      channel
+        .on('presence', { event: 'sync' }, () => {
+          const state = channel.presenceState();
+          const count = Object.keys(state).length;
+          console.log('[LiveViewers] sync count:', count, JSON.stringify(state));
+          setCount(Math.max(count, 1));
+        })
+        .subscribe(async (status) => {
+          console.log('[LiveViewers] status:', status);
+          if (status === 'SUBSCRIBED') {
+            await channel.track({ joined_at: Date.now() });
+          }
+        });
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') { channel.untrack(); }
+        else { channel.track({ joined_at: Date.now() }); }
       });
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') { channel.untrack(); }
-      else { channel.track({ joined_at: Date.now() }); }
-    });
-    window.addEventListener('beforeunload', () => { channel.untrack(); });
-    window.addEventListener('pagehide', () => { channel.untrack(); });
-  } catch (err) { console.warn('[LiveViewers] error:', err); setCount(1); }
+      window.addEventListener('beforeunload', () => { channel.untrack(); });
+      window.addEventListener('pagehide', () => { channel.untrack(); });
+    } catch (err) {
+      console.warn('[LiveViewers] error:', err);
+      setCount(1);
+    }
+  };
+  s.onerror = function() { console.warn('[LiveViewers] failed to load Supabase'); setCount(1); };
+  document.head.appendChild(s);
 })();
 </script>
 <script>
