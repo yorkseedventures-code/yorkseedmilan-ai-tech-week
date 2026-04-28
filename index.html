@@ -674,10 +674,10 @@ input[type="text"]::placeholder { color: var(--smoke); }
   <div class="hero-title"><span>Yorkseed Milan AI Tech Week</span><br>2026 Master Side Event List</div>
   <div class="hero-meta">
     <span class="hero-tag">Milan AI Tech Week</span>
-    <span class="hero-tag">AI &amp; Deep Tech</span>
+    <span class="hero-tag">AI &amp; Tech</span>
     <span class="hero-tag">Web3</span>
     <span class="hero-tag">Founders &amp; VC</span>
-    <span class="hero-tag">Climate &amp; Robotics</span>
+    <span class="hero-tag">Cybersecurity</span>
   </div>
   <div class="hero-body">
     <div class="hero-cols">
@@ -1163,6 +1163,13 @@ function showSuccess(type){const icon=document.getElementById('successIcon'),tit
         if (status === 'SUBSCRIBED') {
           const res = await channel.track({ joined_at: Date.now(), id: myId });
           console.log('[LiveViewers] track result:', res);
+          // Force a count update after tracking
+          setTimeout(() => {
+            const state = channel.presenceState();
+            const count = Object.keys(state).length;
+            console.log('[LiveViewers] post-track count:', count);
+            setCount(Math.max(count, 1));
+          }, 500);
         }
         if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
           console.warn('[LiveViewers] channel error — falling back to 1');
@@ -1188,4 +1195,3 @@ function showSuccess(type){const icon=document.getElementById('successIcon'),tit
 </script>
 </body>
 </html>
-
