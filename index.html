@@ -382,6 +382,79 @@ input[type="text"]::placeholder { color: var(--smoke); }
 }
 .update-event-btn:hover { border-color: var(--red); color: var(--red); }
 
+/* ── FEATURED EVENT ── */
+.featured-strip {
+  max-width: 860px; margin: 24px auto 0; padding: 0 24px;
+}
+.featured-card {
+  background: var(--ink);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0;
+  cursor: pointer;
+  transition: all 0.18s;
+  position: relative;
+}
+.featured-card:hover { box-shadow: 0 6px 32px rgba(200,169,110,0.18); border-color: var(--gold-light); }
+.featured-card.expanded { border-color: var(--gold-light); box-shadow: 0 8px 40px rgba(200,169,110,0.22); }
+.featured-label {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 16px;
+  background: var(--gold);
+  font-family: 'DM Mono', monospace; font-size: 9.5px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink);
+}
+.featured-label-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ink); }
+.featured-main { display: flex; align-items: flex-start; padding: 14px 16px; gap: 14px; }
+.featured-time-col {
+  min-width: 66px; font-family: 'DM Mono', monospace;
+  font-size: 10.5px; color: rgba(200,169,110,0.6); padding-top: 2px; white-space: nowrap;
+}
+.featured-time-col .time { color: var(--gold); font-weight: 600; }
+.featured-body { flex: 1; min-width: 0; }
+.featured-name { font-size: 14px; font-weight: 700; color: white; line-height: 1.3; margin-bottom: 3px; }
+.featured-host { font-size: 11px; color: rgba(200,169,110,0.7); margin-bottom: 8px; }
+.featured-host span { font-style: italic; }
+.featured-tags { display: flex; gap: 4px; flex-wrap: wrap; align-items: center; }
+.tag-featured-ys { background: rgba(200,169,110,0.15); color: var(--gold); border: 1px solid rgba(200,169,110,0.3);
+  font-size: 9.5px; font-weight: 700; padding: 2px 7px; border-radius: 2px;
+  letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+.featured-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-width: 80px; }
+.featured-venue-short { font-size: 10.5px; color: rgba(200,169,110,0.55); text-align: right; line-height: 1.3; }
+.featured-chevron { color: rgba(200,169,110,0.5); font-size: 11px; transition: transform 0.2s; }
+.featured-card.expanded .featured-chevron { transform: rotate(180deg); color: var(--gold); }
+.featured-detail {
+  display: none; padding: 0 16px 16px;
+  border-top: 1px solid rgba(200,169,110,0.18);
+}
+.featured-card.expanded .featured-detail { display: block; }
+.featured-detail-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px 24px; margin-bottom: 12px; padding-top: 14px;
+}
+.featured-detail-grid label {
+  font-family: 'DM Mono', monospace; font-size: 9.5px;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: rgba(200,169,110,0.5); display: block; margin-bottom: 3px;
+}
+.featured-detail-grid p { font-size: 12.5px; color: rgba(255,255,255,0.75); line-height: 1.4; }
+.featured-notes {
+  font-size: 12.5px; color: rgba(200,169,110,0.6); line-height: 1.6;
+  padding: 10px 14px; background: rgba(200,169,110,0.06);
+  border-left: 2px solid var(--gold); margin-bottom: 12px;
+  font-style: italic; border-radius: 0 2px 2px 0;
+}
+.featured-rsvp-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.featured-rsvp-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--gold); color: var(--ink);
+  font-size: 11px; font-weight: 700; padding: 8px 18px;
+  border-radius: 2px; text-decoration: none; transition: background 0.15s;
+  font-family: 'DM Sans', sans-serif; letter-spacing: 0.06em;
+}
+.featured-rsvp-btn:hover { background: var(--gold-light); }
+
 /* ── EMPTY STATE ── */
 .empty-state { text-align: center; padding: 60px 20px; color: var(--smoke); display: none; }
 .empty-state.visible { display: block; }
@@ -661,7 +734,7 @@ input[type="text"]::placeholder { color: var(--smoke); }
     </div>
   </div>
   <div class="header-right">
-    <a href="https://app.yorkseed.co?ref=yorkseed" target="_blank" rel="noopener" class="join-btn">Join Yorkseed Connect ↗</a>
+    <a href="https://yorkseed.co/connect?ref=yorkseed" target="_blank" rel="noopener" class="join-btn">Join Yorkseed Connect ↗</a>
     <div class="live-pill" id="liveViewersPill">
       <span class="live-dot"></span>
       <span id="liveViewerCount">1</span>&nbsp;online
@@ -691,13 +764,13 @@ input[type="text"]::placeholder { color: var(--smoke); }
           I'm <strong style="color:var(--ink);">Jessica Sophia Wong</strong>, founder of Yorkseed. If you're hosting a venture-driven event in Milan, I'd love to know — connect with me via one of the Yorkseed hubs or email <a href="mailto:partnership@yorkseed.co" style="color:var(--red);text-decoration:none;">partnership@yorkseed.co</a>
         </p>
         <div class="connect-box">
-          <div class="connect-box-title">Yorkseed Connect — app.yorkseed.co</div>
+          <div class="connect-box-title">Yorkseed Connect — yorkseed.co/connect</div>
           <p>Yorkseed Connect is our curated global membership platform for founders and investors. Get access to our smart member directory, deal flow, vetted investor network, exclusive event access, and our growing library of venture intelligence — all in one place.</p>
-          <a href="https://app.yorkseed.co/pricing?ref=yorkseed" target="_blank" rel="noopener" class="connect-box-btn">View Plans &amp; Pricing ↗</a>
+          <a href="https://yorkseed.co/connect?ref=yorkseed" target="_blank" rel="noopener" class="connect-box-btn">View Plans &amp; Pricing ↗</a>
         </div>
       </div>
       <div class="hero-col-cta">
-        <a href="https://app.yorkseed.co?ref=yorkseed" target="_blank" rel="noopener" class="hero-cta-primary">
+        <a href="https://yorkseed.co/connect?ref=yorkseed" target="_blank" rel="noopener" class="hero-cta-primary">
           <span>Sign Up — Yorkseed Connect</span><span>↗</span>
         </a>
         <a href="https://yorkseed.co?ref=yorkseed" target="_blank" rel="noopener" class="hero-cta-secondary">
@@ -800,6 +873,42 @@ input[type="text"]::placeholder { color: var(--smoke); }
   </div>
 </div>
 
+<div class="featured-strip" id="featuredStrip">
+  <div class="featured-card" id="featuredCard">
+    <div class="featured-label"><span class="featured-label-dot"></span> Yorkseed Event — Tonight · Tue May 19</div>
+    <div class="featured-main">
+      <div class="featured-time-col"><div class="time">8:00 PM</div><div>–10:00 PM</div></div>
+      <div class="featured-body">
+        <div class="featured-name">Milan AI Tech Week : Yorkseed Founder &amp; Investor Aperitivo</div>
+        <div class="featured-host">Hosted by <span>Yorkseed</span></div>
+        <div class="featured-tags">
+          <span class="tag-featured-ys">Yorkseed</span>
+          <span class="tag tag-vc" style="background:rgba(168,26,26,0.18);color:#ffaaaa;">VC</span>
+          <span class="tag tag-ai" style="background:rgba(26,86,168,0.18);color:#99c2ff;">AI</span>
+          <span class="tag tag-free" style="background:rgba(10,106,69,0.18);color:#6ee7b7;">Free</span>
+          <span class="tag tag-drinks" style="background:rgba(138,80,0,0.18);color:#fbbf24;">🍷 Drinks</span>
+        </div>
+      </div>
+      <div class="featured-right">
+        <div class="featured-venue-short">Sempione</div>
+        <div class="featured-chevron">▾</div>
+      </div>
+    </div>
+    <div class="featured-detail">
+      <div class="featured-detail-grid">
+        <div><label>Venue</label><p>Cocktail Bar Sempione 83 | Gin &amp; Drinks</p></div>
+        <div><label>Address</label><p>Via Sempione 83, Milano</p></div>
+        <div><label>Time</label><p>8:00 PM – 10:00 PM</p></div>
+        <div><label>Ticket</label><p>Free — RSVP required</p></div>
+      </div>
+      <div class="featured-notes">Curated founder and investor aperitivo hosted by Yorkseed during Milan AI Tech Week. An intimate evening for vetted founders, investors, and operators to connect over drinks. RSVP required.</div>
+      <div class="featured-rsvp-row">
+        <a class="featured-rsvp-btn" href="https://luma.com/7utn0v0y" target="_blank" rel="noopener">RSVP on Luma ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="content" id="content">
   <div class="empty-state" id="emptyState">
     <h3>No events match your filters</h3>
@@ -809,7 +918,7 @@ input[type="text"]::placeholder { color: var(--smoke); }
 
 <div class="footer">
   Curated by <strong>Yorkseed</strong> · 2026 Milan AI Tech Week Master Side Event List · All events independently organized ·
-  <a href="https://app.yorkseed.co?ref=yorkseed" target="_blank" style="color:var(--red);text-decoration:none;font-weight:600;">Join Yorkseed Connect → app.yorkseed.co</a>
+  <a href="https://yorkseed.co/connect?ref=yorkseed" target="_blank" style="color:var(--red);text-decoration:none;font-weight:600;">Join Yorkseed Connect → yorkseed.co/connect</a>
 </div>
 
 <script>
@@ -828,15 +937,19 @@ const EVENTS = [
   { id:21, name:"Milan AI Tech Week : Yorkseed Founder & Investor Aperitivo", host:"Yorkseed", date:"2026-05-19", day:"Tue May 19", time:"8:00 PM", venue:"Cocktail Bar Sempione 83 | Gin & Drinks", neighborhood:"Sempione", address:"Via Sempione 83, Milano", types:["vc","ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Curated founder and investor aperitivo hosted by Yorkseed during Milan AI Tech Week. An intimate evening for vetted founders, investors, and operators to connect over drinks. RSVP required.", rsvp:"https://luma.com/7utn0v0y", status:"Open" },
 
   // ── WED MAY 20 ──
+  { id:28, name:"Tech Startups on the Terrace — Open by Joivy, Milan #8", host:"Volodymyr Shynkar", date:"2026-05-20", day:"Wed May 20", time:"6:00 PM", venue:"Open by Joivy (Coworking)", neighborhood:"Porta Romana", address:"Viale Monte Nero 6, 20135 Milano", types:["ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Relaxed rooftop terrace networking for tech founders, builders, and enthusiasts. No panels, no pitching — just good conversation over drinks at the coworking space Open by Joivy. Running 3.5 years in London, now monthly in Milan. Note: event closes 9–9:30 PM.", rsvp:"https://www.eventbrite.it/e/tech-startups-on-the-terrace-new-location-open-by-joivy-milan-8-tickets-1989213640547", status:"Open" },
   { id:7, name:"AI Week Milan 2026 — Day 2", host:"IA Spiegata Semplice", date:"2026-05-20", day:"Wed May 20", time:"9:00 AM", venue:"Fiera Milano (Rho)", neighborhood:"Fiera / Rho", address:"Strada Statale Sempione 28, 20017 Rho (MI)", types:["ai","conference"], free:false, drinks:false, food:false, ticket:"Paid", notes:"Final day of Europe's largest AI event. 250+ AI exhibitors, startup pitches, investor roundtables, AI Olympics challenge, and closing networking. 17 stages, 700+ speakers total across both days.", rsvp:"https://www.aiweek.it/en/?ref=yorkseed", status:"Open" },
   { id:8, name:"AI Week — Closing Night Party", host:"AI Week / Community", date:"2026-05-20", day:"Wed May 20", time:"7:00 PM", venue:"TBD — Milano", neighborhood:"Milano", address:"Milano, Italia", types:["ai","community"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Official closing party of AI Week Milan. Watch AI Week social channels for venue and ticket details. Largest AI party in Italy.", rsvp:"https://www.aiweek.it/en/?ref=yorkseed", status:"Open" },
   { id:9, name:"Dinner with Entrepreneurs — Milan", host:"Independent", date:"2026-05-20", day:"Wed May 20", time:"7:30 PM", venue:"TBD Restaurant — Milano", neighborhood:"Brera / Navigli", address:"Milano, Italia", types:["vc","community"], free:false, drinks:true, food:true, ticket:"Paid", notes:"Curated dinner series for founders and investors. Small group, intimate format. Check Eventbrite Milan for confirmed dates and seats.", rsvp:"https://www.eventbrite.com/d/italy--milano/startup/?ref=yorkseed", status:"Open" },
 
   // ── THU MAY 21 ──
   { id:10, name:"ETHMilan 2026 — Day 1", host:"ETHMilan", date:"2026-05-21", day:"Thu May 21", time:"9:00 AM", venue:"Museo Nazionale della Scienza e della Tecnologia Leonardo da Vinci", neighborhood:"Sant'Ambrogio", address:"Via San Vittore 21, 20123 Milano", types:["web3","conference"], free:false, drinks:false, food:false, ticket:"Paid (from €50)", notes:"Italy's largest Ethereum & Web3 conference — 4th edition. 2,000+ attendees, 100+ speakers. Tracks: Layer 2 & modularity, institutional infrastructure, DeFi, tokenization & RWAs, AI x blockchain, stablecoins, ZK proofs, regulation. Sponsors: MoonPay, Binance, Kraken. Students attend free.", rsvp:"https://www.ethmilan.xyz/?ref=yorkseed", status:"Open" },
-  { id:11, name:"Milan0Day 2026 — Cybersecurity Conference", host:"k1nd4sus / Milan0Day", date:"2026-05-21", day:"Thu May 21", time:"10:00 AM", venue:"TBD — Milano", neighborhood:"Milano", address:"Milano, Italia", types:["ai","community","conference"], free:false, drinks:false, food:false, ticket:"Paid", notes:"Full-day community cybersecurity conference. Focus: cutting-edge research, real-world attack techniques, defensive strategies, cloud, AI security, cryptography, network and hardware security, critical infrastructure.", rsvp:"https://www.eventbrite.com/e/milan0day-2026-cybersecurity-conference-tickets-1984064435135?ref=yorkseed", status:"Open" },
+  { id:11, name:"Milan0Day 2026 — Cybersecurity Conference", host:"K!nd4SUS UNIMI Cybersecurity Team", date:"2026-05-21", day:"Thu May 21", time:"10:00 AM", venue:"Aula Magna Bertoni — Università degli Studi di Milano", neighborhood:"Città Studi", address:"Via Giovanni Celoria 18, Aula Magna Bertoni (Floor 0), 20133 Milano", types:["ai","community","conference"], free:false, drinks:false, food:false, ticket:"Paid", notes:"Full-day community cybersecurity conference hosted by UNIMI's K!nd4SUS team. Talks include: AI model attacks (Jigyasa Grover), breaking pacemaker authentication with formal methods (Christian Coduri), and more. Focus: cloud, AI security, cryptography, network, hardware, and critical infrastructure. Runs 10:00 AM – 5:45 PM.", rsvp:"https://www.eventbrite.com/e/milan0day-2026-cybersecurity-conference-tickets-1984064435135", status:"Open" },
   { id:12, name:"ETHMilan — Side Event: DeFi & Web3 Builders Happy Hour", host:"ETHMilan Community", date:"2026-05-21", day:"Thu May 21", time:"6:30 PM", venue:"TBD — Central Milano", neighborhood:"Milano", address:"Milano, Italia", types:["web3","community"], free:true, drinks:true, food:true, ticket:"Free", notes:"Pre-conference evening side event alongside ETHMilan. Founders, developers, and investors gather for drinks and informal networking. Check @eth_milano on X for venue confirmation.", rsvp:"https://luma.com/6cnljrf0?ref=yorkseed", status:"Open" },
   { id:13, name:"Founder Institute Milan — Pitch & Networking Night", host:"Founder Institute Milan", date:"2026-05-21", day:"Thu May 21", time:"6:00 PM", venue:"TBD — Milano", neighborhood:"Milano", address:"Milano, Italia", types:["vc","community"], free:true, drinks:false, food:false, ticket:"Free", notes:"Founder Institute Milan's regular pitch and networking night for early-stage founders. Open to aspiring and active founders. Part of a global network across 120+ countries.", rsvp:"https://fi.co/insight/milan-startup-events?ref=yorkseed", status:"Open" },
+
+  { id:31, name:"EPICODE Community MeetUp — Milano", host:"EPICODE", date:"2026-05-21", day:"Thu May 21", time:"6:30 PM", venue:"Viale Cassala 30", neighborhood:"Navigli / Ticinese", address:"Viale Cassala 30, 20143 Milano", types:["ai","community"], free:true, drinks:false, food:false, ticket:"Free", notes:"Informal tech networking meetup by EPICODE, open to all. Students, career-switchers, and tech enthusiasts welcome. EPICODE Ambassadors on hand to share career paths and advice on AI and digital careers. Doors open 6:15 PM. Ages 18+.", rsvp:"https://www.eventbrite.com/e/community-meetup-milano-tickets-1988827422358", status:"Open" },
+  { id:29, name:"AI Agentica Enterprise: i casi concreti, i tempi, la governance", host:"Hevolus Innovation", date:"2026-05-21", day:"Thu May 21", time:"10:00 AM", venue:"Microsoft House Milano", neighborhood:"Porta Volta", address:"Viale Pasubio 21, 20154 Milano", types:["ai","conference"], free:false, drinks:false, food:true, ticket:"Invite Only", notes:"3 enterprise clients on stage at Microsoft House showing agentic AI in production. Live demo: XR Copilot via Agent 365 with multi-agent orchestration and real-time compliance. Customer testimonial: INDIRE (Erasmus process fully agentified in 8 weeks). Keynote by Prof. Francesco Sacco on enterprise AI governance. Light lunch + 1-on-1s at 12:45. Runs 10:00 AM – 2:00 PM. Invite-only, 50 seats.", rsvp:"https://www.eventbrite.it/e/ai-agentica-enterprise-i-casi-concreti-i-tempi-la-governance-tickets-1989369931016", status:"Invite Only" },
 
   // ── FRI MAY 22 ──
   { id:14, name:"ETHMilan 2026 — Day 2", host:"ETHMilan", date:"2026-05-22", day:"Fri May 22", time:"9:00 AM", venue:"Museo Nazionale della Scienza e della Tecnologia Leonardo da Vinci", neighborhood:"Sant'Ambrogio", address:"Via San Vittore 21, 20123 Milano", types:["web3","conference"], free:false, drinks:false, food:false, ticket:"Paid (from €50)", notes:"Day 2 of ETHMilan. Programme: Neobanks, Agentic Payments, IP & culture, workshop sessions. Full access to the museum's permanent exhibitions included. Students attend free.", rsvp:"https://www.ethmilan.xyz/?ref=yorkseed", status:"Open" },
@@ -852,6 +965,18 @@ const EVENTS = [
   { id:20, name:"ItaliaSec Summit 2026 — Day 2", host:"QG Media", date:"2026-05-24", day:"Sun May 24", time:"9:00 AM", venue:"Milan Marriott Hotel", neighborhood:"Portello", address:"Via Washington 66, 20146 Milano", types:["ai","conference"], free:false, drinks:false, food:false, ticket:"Paid", notes:"Final day of ItaliaSec. 1-on-1 meetings, architecture engineering discussions, energy infrastructure resilience sessions. Senior CISOs from ENI, Autostrade per l'Italia, Aeroporti di Roma, and others.", rsvp:"https://italy.cyberseries.io/?ref=yorkseed", status:"Open" },
 
   // ── NEW ADDITIONS ──
+  { id:32, name:"L'Ultimo Prompt — AI Week 2026 Edition", host:"Avantgrade.com", date:"2026-05-19", day:"Tue May 19", time:"7:00 PM", venue:"Justme Milano — Restaurant & Club", neighborhood:"Sempione", address:"Viale Luigi Camoens 2, 20121 Milano", types:["ai","community"], free:false, drinks:true, food:false, ticket:"Paid", notes:"The aperitivo for people who eat, sleep and breathe AI. Networking evening during AI Week for AI practitioners, enthusiasts, founders and builders. Ages 18+.", rsvp:"https://www.eventbrite.it/e/biglietti-lultimo-prompt-ai-week-2026-edition-1989082694885", status:"Open" },
+  { id:33, name:"Merito e Mediocrità ai Tempi dell'IA — 3° Incontro", host:"Almo Collegio Borromeo", date:"2026-05-21", day:"Thu May 21", time:"6:00 PM", venue:"Almo Collegio Borromeo", neighborhood:"Pavia (30 min from Milan)", address:"Piazza del Collegio Borromeo 9, 27100 Pavia", types:["ai","community"], free:true, drinks:false, food:false, ticket:"Free", notes:"Third instalment of the series on merit and mediocrity in the age of AI. Speakers: Vittorio Gallese (Università di Parma) on 'Il Sé Digitale — dai neuroni specchio alla mediazione tecnologica'; Franco Locatelli (Università Cattolica / Bambino Gesù) on advanced biotechnological therapies. Introduced by Renzo Dionigi.", rsvp:"https://www.eventbrite.it/e/biglietti-merito-e-mediocrita-ai-tempi-dellia-3-incontro-1989227506019", status:"Open" },
+  { id:34, name:"Intelligenza Artificiale: non è una tecnologia, è un cambio di mentalità", host:"Nardone Organization", date:"2026-05-21", day:"Thu May 21", time:"8:30 PM", venue:"Yacht Club Como", neighborhood:"Como (45 min from Milan)", address:"Viale Giancarlo Puecher 8, 22100 Como", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Paid", notes:"Evening talk on AI as a strategic mindset shift, not just a technology. Alessandro Nardone and Francesco Fabiano explore competitive advantage, positioning, and the human factor in AI adoption. Real case studies and concrete frameworks. 8:30 PM – 10:30 PM.", rsvp:"https://www.eventbrite.it/e/intelligenza-artificiale-non-e-una-tecnologia-e-un-cambio-di-mentalita-tickets-1988926061390", status:"Open" },
+  { id:35, name:"Pota! L'Agentic AI — Stop Prompting, Start Building Agents", host:"Matteo Gazzurelli", date:"2026-05-21", day:"Thu May 21", time:"6:30 PM", venue:"Blue Tech Hub by Buffoli", neighborhood:"Brescia (1 hr from Milan)", address:"Via Ferrini 26/I, 25128 Brescia", types:["ai","community"], free:true, drinks:true, food:false, ticket:"Free", notes:"Hands-on evening on agentic AI architectures, live demo of a production agent, and the 2026 agentic stack (ADK, MCP, A2A). Followed by networking at a nearby brewery. For devs, CTOs, students, founders. Free parking. Limited seats — register only if you can attend.", rsvp:"https://www.eventbrite.it/e/pota-lagentic-ai-stop-prompting-start-building-agents-tickets-1988181799282", status:"Open" },
+  { id:36, name:"Twilight Talks: Understanding AI Together", host:"International School of Ticino", date:"2026-05-20", day:"Wed May 20", time:"6:30 PM", venue:"International School of Ticino SA", neighborhood:"Cadempino, Ticino (Switzerland)", address:"Via Ponteggia 23, 6814 Cadempino, Switzerland", types:["ai","community"], free:true, drinks:false, food:false, ticket:"Free", notes:"Parent-facing evening on AI in education. Live demos of ChatGPT, Claude, and Gamma. The art of prompting, AI as intellectual companion. Hosted by school leadership: Principal Nicholas Bruce, EdTech Coordinator Christina Rosso, and Assistant Head Ilaria Cambiaghi. Bring a laptop for hands-on activities.", rsvp:"https://www.eventbrite.com/e/twilight-talks-understanding-ai-together-tickets-1987807811675", status:"Open" },
+  { id:37, name:"Open Data a Bergamo: Corso Introduttivo con LibreOffice e QGIS", host:"FabLab Bergamo", date:"2026-05-23", day:"Sat May 23", time:"3:30 PM", venue:"FabLab Bergamo", neighborhood:"Bergamo (45 min from Milan)", address:"Via Mauro Gavazzeni 3, 24125 Bergamo", types:["ai","community"], free:false, drinks:false, food:false, ticket:"Paid", notes:"Introductory workshop on Open Data: what it is, how to read CSV datasets with LibreOffice, visualise geographic data with QGIS, and request unpublished public data. Real datasets from Bergamo, Milan, and Lombardia. No prior experience needed. Max 20 seats. 3:30 PM – 5:00 PM.", rsvp:"https://www.eventbrite.it/e/biglietti-open-data-a-bergamo-corso-introduttivo-con-libreoffice-e-qgis-1988619378092", status:"Open" },
+  { id:38, name:"Expanding the Core — Apertura del Nuovo Data Center First Point", host:"First Point srl", date:"2026-05-22", day:"Fri May 22", time:"10:30 AM", venue:"First Point Srl", neighborhood:"Fidenza (1 hr from Milan)", address:"Via Valdemaro Vecchi 120, 43036 Fidenza", types:["ai","conference"], free:true, drinks:false, food:true, ticket:"Free", notes:"Opening of First Point's new data center. Agenda: IT infrastructure scaling with FESR 2021–2027 funds, digital voucher opportunities for SMEs (2026 call). Presentations 11:00 AM–1:00 PM, followed by lunch. Registration from 10:30 AM.", rsvp:"https://www.eventbrite.it/e/expanding-the-core-apertura-del-nuovo-data-center-first-point-tickets-1988410289703", status:"Open" },
+  { id:39, name:"Inside Tech&Food Academy: il futuro dell'agroalimentare passa da Parma", host:"ITS Tech&Food Academy / Imprese Aperte Parma", date:"2026-05-22", day:"Fri May 22", time:"11:30 AM", venue:"ITS Tech&Food Academy", neighborhood:"Parma (1 hr from Milan)", address:"Via Torrente Bratica, 43124 Parma", types:["ai","community"], free:true, drinks:false, food:true, ticket:"Free", notes:"Open doors at ITS Tech&Food Academy for Imprese Aperte. Lab tour: Enterprise Lab, Quality Assurance, e.DO robotics arms, and a live sensory analysis session in the Consumer Science Lab. Followed by a light refreshment. For students, families, and curious citizens. Ages 16+. Doors 11:15 AM.", rsvp:"https://www.eventbrite.it/e/inside-techfood-academy-il-futuro-dellagroalimentare-passa-da-parma-tickets-1987121651351", status:"Open" },
+  { id:40, name:"PyCUTE: PyCon Unofficial Turin Edition", host:"Python Torino", date:"2026-05-21", day:"Thu May 21", time:"6:30 PM", venue:"Fondazione ITS per l'ICT Piemonte", neighborhood:"Turin (1.5 hr from Milan)", address:"Via Jacopo Durandi 10, 10144 Torino", types:["ai","community"], free:true, drinks:false, food:false, ticket:"Free", notes:"Preview of talks ahead of PyCon Italia 2026 (Bologna, May 28–30). Four talks: Open Source contributions (Riccardo Magliocchetti), Orbital ML-to-SQL framework (Alessandro Molina), PEP 810 Lazy Imports (Antonio Spadaro), Python anti-patterns (Dario Scanferlato). Talks 7:15–8:45 PM, social dinner after at Piazza dei Mestieri.", rsvp:"https://www.eventbrite.com/e/pycute-pycon-unofficial-turin-edition-tickets-1989305041931", status:"Open" },
+
+];
+  { id:30, name:"AI Agent Olympics Hackathon — $32K Prizes + Free Milan AI Week Ticket", host:"LabLab AI", date:"2026-05-19", day:"Tue May 19", time:"10:00 AM", venue:"Fiera Milano", neighborhood:"Fiera / Rho", address:"Strada Statale Sempione 28, 20017 Rho (MI)", types:["ai","conference"], free:true, drinks:false, food:false, ticket:"Free", notes:"Official hackathon of Milan AI Week 2026. Runs May 19–20, 10:00 AM – 8:00 PM each day. $28,000+ prize pool. Free Milan AI Week conference ticket included for all participants. Powered by Google DeepMind, Kraken, Vultr, Featherless, Surge, NativelyAI & Speechmatics. Register via lablab.ai for on-site spot consideration.", rsvp:"https://www.eventbrite.com/e/ai-agent-olympics-hackathon-prizes-32k-free-milan-ai-week-ticket-tickets-1987936520647", status:"Open" },
   { id:22, name:"Mille strade: carriere non lineari e futuro con Matteo Roversi", host:"The Modern Renaissance", date:"2026-05-19", day:"Tue May 19", time:"6:00 PM", venue:"Via S. Vigilio, 5", neighborhood:"Milano", address:"Via S. Vigilio, 5, Milano", types:["community"], free:true, drinks:false, food:false, ticket:"Free", notes:"A talk on non-linear careers and the future of work with Matteo Roversi, hosted by The Modern Renaissance community.", rsvp:"https://luma.com/yr1fpsrx", status:"Open" },
   { id:23, name:"LAVORO FATTO A PEZZI 🗺️ SPAZIO", host:"Cosmico Italia", date:"2026-05-19", day:"Tue May 19", time:"6:30 PM", venue:"Fondazione Giangiacomo Feltrinelli", neighborhood:"Porta Volta", address:"Viale Pasubio 5, Milano", types:["community"], free:true, drinks:false, food:false, ticket:"Free", notes:"An event by Cosmico Italia at the iconic Fondazione Giangiacomo Feltrinelli, exploring the fragmented future of work.", rsvp:"https://luma.com/a6t783ha", status:"Open" },
   { id:24, name:"Offline Reading Party | con Aperitivo da Nepà 🍸", host:"The Offline Club | Milano", date:"2026-05-21", day:"Thu May 21", time:"6:30 PM", venue:"Pasticceria Nepà 100% plant-based", neighborhood:"Milano", address:"Milano, Italia", types:["community"], free:true, drinks:true, food:true, ticket:"Free", notes:"An offline reading party with aperitivo at Pasticceria Nepà, hosted by The Offline Club Milano. Leave the screens behind for an evening of books and plant-based drinks.", rsvp:"https://luma.com/event/evt-UpzCW9P9jxCo2cP", status:"Open" },
@@ -998,6 +1123,11 @@ document.querySelectorAll('.filter-chip[data-free]').forEach(chip=>{
 document.getElementById('searchInput').addEventListener('input',function(){searchTerm=this.value.trim();render();});
 buildDayTabs();render();
 document.getElementById('headerCount').textContent=allEvents().length+' events';
+
+// ── FEATURED CARD TOGGLE ──
+document.getElementById('featuredCard').addEventListener('click', function() {
+  this.classList.toggle('expanded');
+});
 
 // ── EMAIL GATE ──
 const GATE_TRIGGER=3;let eventOpenCount=0,gateShown=false,gateCleared=false;
